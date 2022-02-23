@@ -63,14 +63,14 @@ WHERE `departments`.`name` = 'Dipartimento di Neuroscienze';
 -- Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
 -- ---------------------------------------------------------
 --  join prima sulla tabella ponte
--- dopo faccio un left join che restituisce i valori alla tabella di sinistra anche quelli non corrispondeti.
+-- dopo faccio un altro join su courses
 -- e mettendo condizione che teacher id = 44 avrò i corsi in cui insegna quell'insegnante
 SELECT `teachers`.`id`, `teachers`.`name`,`teachers`.`surname`,`courses`.`name`
 FROM `teachers`
- JOIN `course_teacher`
+JOIN `course_teacher`
    ON `course_teacher`.`teacher_id`= `teachers`.`id`
-LEFT JOIN `courses`
-       ON  `courses`.`id`= `course_teacher`.`course_id`      
+JOIN `courses`
+ON  `courses`.`id`= `course_teacher`.`course_id`      
 WHERE `teachers`.`id`= 44;
 
 
@@ -82,7 +82,7 @@ SELECT `students`.`name`,`students`.`surname`,`degrees`.`name`,`departments`.`na
 FROM `students`
 JOIN `degrees`
 	ON `degrees`.`id` = `students`.`degree_id`
-LEFT JOIN `departments`
+JOIN `departments`
 	ON `departments`.`id` = `degrees`.`department_id`
 ORDER BY `students`.`surname`, `students`.`name`;
 
@@ -93,9 +93,9 @@ SELECT `degrees`.`name` , `courses`.`name` ,`teachers`.`name`, `teachers`.`surna
 FROM `degrees`
 JOIN `courses`
 	ON `courses`.`degree_id` = `degrees`.`id`
-LEFT JOIN `course_teacher`
+JOIN `course_teacher`
 	ON `course_teacher`.`course_id` = `courses`.`id`
-LEFT JOIN `teachers`
+JOIN `teachers`
 	ON `teachers`.`id` = `course_teacher`.`teacher_id`
 
 
