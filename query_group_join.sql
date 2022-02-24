@@ -129,4 +129,4 @@ JOIN `exams`
 JOIN `courses`
 	ON `exams`.`course_id` = `courses`.`id`
 GROUP BY `students`.`id`, `exams`.`course_id`
-  HAVING `exam_student`.`vote`>=18
+  HAVING MAX(`exam_student`).`vote`>=18
