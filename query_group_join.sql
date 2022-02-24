@@ -12,9 +12,11 @@ GROUP BY YEAR(`enrolment_date`)
 -- Contare gli insegnanti che hanno l'ufficio nello stesso edificio
 -- -------------------------------------------------
 -- stesso metodo utilizzato prima
+-- condizione per quelli che condividono + di un edificio
 SELECT COUNT(*) , `office_address` 
 FROM `teachers`
 GROUP BY `office_address`
+Having COUNT(id) > 1
 
 
 -- Calcolare la media dei voti di ogni appello d'esame
@@ -118,7 +120,7 @@ WHERE `departments`.`name`= 'Dipartimento di Matematica';
 -- superare ciascuno dei suoi esame
 -- ----------------------------------------------------
 -- per i tentativi conto le righe e rinomino la tabella tentativi
-SELECT `students`.`id`, `students`.`name`, `students`.`surname`, `exams`.`course_id`, `courses`.`name`,COUNT(*) AS `attempts`
+SELECT `students`.`id`, `students`.`name`, `students`.`surname`, `exams`.`course_id`, `courses`.`name`,COUNT(*) AS `attempts`, MAX(`exam_student`.`vote`)
 FROM `students`
 JOIN `exam_student`
 	ON `students`.`id` = `exam_student`.`student_id`
@@ -127,3 +129,4 @@ JOIN `exams`
 JOIN `courses`
 	ON `exams`.`course_id` = `courses`.`id`
 GROUP BY `students`.`id`, `exams`.`course_id`
+  HAVING `exam_student`.`vote`>=18
